@@ -26,7 +26,7 @@ export const createCheckoutSession = async (req, res) => {
       line_items: [{ price: priceId, quantity: 1 }],
       customer_email: req.user.email,
       metadata: { userId, activity, duration },
-      success_url: `http://localhost:3000/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `http://localhost:3000/dashboard?success=true`,
       cancel_url: `http://localhost:3000/cancel`,
     });
 
