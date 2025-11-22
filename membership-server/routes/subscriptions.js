@@ -6,8 +6,7 @@ import {
   cancelSubscription,
   getAllSubscriptions,
   deleteSubscriptionByAdmin,
-  createCheckoutSession,
-  webhookHandler
+  createCheckoutSession
 } from "../controllers/subscriptionController.js";
 
 import { verifyToken, requireAdmin } from "../middleware/authMiddleware.js";
@@ -21,7 +20,7 @@ router.get("/", verifyToken, getUserSubscriptions);
 router.delete("/:id", verifyToken, cancelSubscription);
 
 // Stripe webhook route (no auth needed)
-router.post("/webhook", express.raw({ type: "application/json" }), webhookHandler);
+// router.post("/webhook", express.raw({ type: "application/json" }), webhookHandler);
 
 
 

@@ -81,17 +81,17 @@ export const webhookHandler = async (req, res) => {
   let event;
 
   try {
+    // constructEvent needs raw body, which you already pass in the route
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
-    console.error("Webhook signature verification failed.", err.message);
+    console.error("❌ Webhook signature verification failed:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
   // Handle checkout.session.completed
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    console.log("Received checkout.session.completed event:");
-    console.log(session);
+    console.log("✅ Webhook: checkout.session.completed", session.id);
 
     try {
       const userId = session.metadata.userId;
@@ -99,7 +99,7 @@ export const webhookHandler = async (req, res) => {
       const duration = session.metadata.duration;
 
       const start_date = new Date();
-      let end_date = new Date(start_date);
+      const end_date = new Date(start_date);
       end_date.setMonth(end_date.getMonth() + parseInt(duration));
 
       await pool.query(
@@ -112,7 +112,8 @@ export const webhookHandler = async (req, res) => {
         `Subscription added for user ${userId}, activity: ${activity}`
       );
     } catch (err) {
-      console.error("Failed to insert subscription from webhook:", err);
+      console.error("❌ Failed to insert subscription from webhook:", err);
+      // Do not fail webhook; Stripe expects 200
     }
   }
 
