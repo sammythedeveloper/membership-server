@@ -77,8 +77,6 @@ export const createSubscriptions = async (req, res) => {
 export const webhookHandler = async (req, res) => {
   const sig = req.headers["stripe-signature"];
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  console.log("Received checkout.session.completed event:");
-  console.log(session);
 
   let event;
 
@@ -92,6 +90,8 @@ export const webhookHandler = async (req, res) => {
   // Handle checkout.session.completed
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
+    console.log("Received checkout.session.completed event:");
+    console.log(session);
 
     try {
       const userId = session.metadata.userId;
