@@ -37,8 +37,6 @@ export const createCheckoutSession = async (req, res) => {
   }
 };
 
-
-
 // Create one or multiple subscriptions
 export const createSubscriptions = async (req, res) => {
   const { subscriptions } = req.body; // expect an array of { activity, duration }
@@ -79,6 +77,8 @@ export const createSubscriptions = async (req, res) => {
 export const webhookHandler = async (req, res) => {
   const sig = req.headers["stripe-signature"];
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  console.log("Received checkout.session.completed event:");
+  console.log(session);
 
   let event;
 
@@ -108,7 +108,9 @@ export const webhookHandler = async (req, res) => {
         [userId, activity, duration, start_date, end_date]
       );
 
-      console.log(`Subscription added for user ${userId}, activity: ${activity}`);
+      console.log(
+        `Subscription added for user ${userId}, activity: ${activity}`
+      );
     } catch (err) {
       console.error("Failed to insert subscription from webhook:", err);
     }
@@ -116,7 +118,6 @@ export const webhookHandler = async (req, res) => {
 
   res.status(200).json({ received: true });
 };
-
 
 // Get all subscriptions for logged-in user
 export const getUserSubscriptions = async (req, res) => {
