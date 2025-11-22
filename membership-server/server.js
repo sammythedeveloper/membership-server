@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5001;
 // Allowlist for CORS
 const allowedOrigins = [
   "http://localhost:3000", // local frontend
-  // process.env.FRONTEND_URL // add your deployed frontend URL in .env as FRONTEND_URL
+  process.env.FRONTEND_URL // add your deployed frontend URL in .env as FRONTEND_URL
 ];
 
 // CORS middleware
