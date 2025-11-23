@@ -33,12 +33,14 @@ app.use(
   })
 );
 
-// Stripe Webhook: RAW body must come **before** express.json()
-app.post(
-  "/api/subscription/webhook",
-  express.raw({ type: "application/json" }),
-  webhookHandler
-);
+// JSON parsing — but DO NOT parse the Stripe webhook route
+app.use((req, res, next) => {
+  if (req.originalUrl === "/api/subscription/webhook") {
+    return next(); // skip express.json() for webhook
+  }
+  express.json()(req, res, next);
+});
+
 
 // JSON body parsing
 app.use(express.json());
