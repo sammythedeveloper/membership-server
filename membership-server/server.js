@@ -10,6 +10,8 @@ import { webhookHandler } from "./controllers/subscriptionController.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
+console.log("🚀 Server file loaded");
+
 
 // Allowlist for CORS
 const allowedOrigins = [
@@ -67,5 +69,6 @@ app.get("/protected", verifyToken, (req, res) => {
 app.get("/admin-protected", verifyToken, requireAdmin, (req, res) => {
   res.json({ message: "Welcome Admin!", user: req.user });
 });
+console.log("✅ About to start server");
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
