@@ -15,8 +15,8 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Allowlist for CORS
 const allowedOrigins = [
-  "http://localhost:3000",
-  process.env.FRONTEND_URL?.trim() 
+  "http://localhost:3000", // local dev
+  "https://membership-client.vercel.app" // deployed frontend
 ];
 
 app.use(
