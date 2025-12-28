@@ -12,29 +12,24 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-
 // Allowlist for CORS
-const allowedOrigins = [
-  "http://localhost:3000", // local frontend
-  process.env.FRONTEND_URL 
-];
+const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URL];
 
-// CORS middleware
-app.use(cors());
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow requests like curl/postman
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `CORS policy: Access from origin ${origin} is not allowed`;
-        return callback(new Error(msg), false);
+      if (!origin) return callback(null, true);
+      if (!allowedOrigins.includes(origin)) {
+        return callback(
+          new Error(`CORS policy: Access from origin ${origin} is not allowed`),
+          false
+        );
       }
       return callback(null, true);
     },
     credentials: true,
   })
 );
-
 
 // ----------------------
 // 1️⃣ Stripe webhook route MUST be **before** express.json()
@@ -49,7 +44,6 @@ app.post(
   webhookHandler
 );
 
-
 // ----------------------
 // 2️⃣ JSON parsing for everything else
 // ----------------------
@@ -60,7 +54,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/subscription", subscriptionRoutes);
 
 // Test DB connection
-pool.connect()
+pool
+  .connect()
   .then(() => console.log("✅ Connected to PostgreSQL"))
   .catch((err) => console.error(err));
 
