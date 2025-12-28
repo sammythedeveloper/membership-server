@@ -15,22 +15,24 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Allowlist for CORS
 const allowedOrigins = [
-  "http://localhost:3000", // local dev
-  "https://membership-client.vercel.app" // deployed frontend
+  "http://localhost:3000",            // for local testing
+  "https://membership-client.vercel.app" // your deployed frontend
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow requests with no origin (like Postman or server-to-server)
       if (!origin) return callback(null, true);
       if (!allowedOrigins.includes(origin)) {
         return callback(new Error(`CORS policy: Access from origin ${origin} is not allowed`), false);
       }
       return callback(null, true);
     },
-    credentials: true,
+    credentials: true, // allow cookies/auth headers if needed
   })
 );
+
 
 // ----------------------
 // 1️⃣ Stripe webhook route MUST be **before** express.json()
