@@ -10,7 +10,7 @@ import { webhookHandler } from "./controllers/subscriptionController.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
-console.log("🚀 Server file loaded");
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 // Allowlist for CORS
