@@ -5,6 +5,8 @@ import Stripe from "stripe";
 import { stripePrices } from "../config/stripe.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+console.log("Stripe Key:", process.env.STRIPE_SECRET_KEY ? "SET" : "MISSING");
+
 
 export const createCheckoutSession = async (req, res) => {
   const { activity, duration } = req.body; // now duration comes from frontend
