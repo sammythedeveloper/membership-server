@@ -16,7 +16,7 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // Allowlist for CORS
 const allowedOrigins = [
   "http://localhost:3000",
-  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URL?.trim() 
 ];
 
 app.use(
