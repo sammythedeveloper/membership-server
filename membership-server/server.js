@@ -8,67 +8,81 @@ import { verifyToken, requireAdmin } from "./middleware/authMiddleware.js";
 import { webhookHandler } from "./controllers/subscriptionController.js";
 
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Allowlist for CORS
-const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URL];
+// 1. STABILIZE CORS
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://horizonhubt.vercel.app",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
 
 app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
-      if (!allowedOrigins.includes(origin)) {
-        return callback(
-          new Error(`CORS policy: Access from origin ${origin} is not allowed`),
-          false
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        // Log
+        console.error(`CORS Blocked: ${origin}`);
+        callback(
+          new Error(`CORS policy: Access from origin ${origin} is not allowed`)
         );
       }
-      return callback(null, true);
     },
     credentials: true,
+    optionsSuccessStatus: 200,
   })
 );
 
 // ----------------------
-// Stripe webhook route 
+// 2. Stripe Webhook (MUST come before express.json)
 // ----------------------
 app.post(
   "/api/subscription/webhook",
   express.raw({ type: "application/json" }),
-  (req, res, next) => {
-    console.log("RAW body received from Stripe:", req.body.toString());
-    next();
-  },
   webhookHandler
 );
 
 // ----------------------
-// JSON parsing for everything else
+// 3. Global Middleware (JSON parsing for everything else)
 // ----------------------
-
 app.use(express.json());
 
-// Auth & Subscription routes
+// ----------------------
+// 4. Main Routes
+// ----------------------
 app.use("/api/auth", authRoutes);
 app.use("/api/subscription", subscriptionRoutes);
 
-// Test DB connection
-pool
-  .connect()
-  .then(() => console.log("✅ Connected to PostgreSQL"))
-  .catch((err) => console.error(err));
-
-// Protected route
+// ----------------------
+// 5. Protected/Test Routes
+// ----------------------
 app.get("/protected", verifyToken, (req, res) => {
   res.json({ message: "You accessed a protected route!", user: req.user });
 });
 
-// Admin-only route
 app.get("/admin-protected", verifyToken, requireAdmin, (req, res) => {
   res.json({ message: "Welcome Admin!", user: req.user });
 });
-console.log("✅ About to start server");
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// ----------------------
+// 6. DB Connection & Server Start
+// ----------------------
+console.log("✅ Preparing to start server...");
+
+pool
+  .connect()
+  .then(() => {
+    console.log("✅ Connected to PostgreSQL");
+    // Only one listen call, and it's at the very end
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  })
+  .catch((err) => {
+    console.error("❌ Database connection failed:", err);
+    process.exit(1);
+  });
