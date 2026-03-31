@@ -11,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 export const createCheckoutSession = async (req, res) => {
-  const { activity, duration } = req.body; // now duration comes from frontend
+  const { activity, duration } = req.body; 
   const userId = req.user.id;
 
   if (!activity || !duration) {
@@ -43,7 +43,7 @@ export const createCheckoutSession = async (req, res) => {
 
 // Create one or multiple subscriptions
 export const createSubscriptions = async (req, res) => {
-  const { subscriptions } = req.body; // expect an array of { activity, duration }
+  const { subscriptions } = req.body; 
   const userId = req.user.id;
 
   if (!subscriptions || !Array.isArray(subscriptions)) {

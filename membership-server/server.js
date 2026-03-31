@@ -32,7 +32,7 @@ app.use(
 );
 
 // ----------------------
-// 1️⃣ Stripe webhook route MUST be **before** express.json()
+// Stripe webhook route 
 // ----------------------
 app.post(
   "/api/subscription/webhook",
@@ -45,8 +45,9 @@ app.post(
 );
 
 // ----------------------
-// 2️⃣ JSON parsing for everything else
+// JSON parsing for everything else
 // ----------------------
+
 app.use(express.json());
 
 // Auth & Subscription routes

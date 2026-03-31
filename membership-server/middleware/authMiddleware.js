@@ -8,10 +8,6 @@ export const verifyToken = (req, res, next) => {
     return res.status(401).json({ message: "No token provided" });
   }
 
-  /*
-     Expected format:
-     Authorization: Bearer <token>
-  */
   const token = authHeader.split(" ")[1];
 
   if (!token) {
@@ -21,7 +17,7 @@ export const verifyToken = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach user info to request (id, role)
+    // Attaches user info to request (id, role)
     req.user = decoded;
     next();
   } catch (err) {
