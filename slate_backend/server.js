@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5001;
 // 1. STABILIZE CORS
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://horizonhubt.vercel.app",
+  "https://slate-fawn-one.vercel.app/",
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
