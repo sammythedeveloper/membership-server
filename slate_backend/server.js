@@ -12,16 +12,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-
-// 2. Stripe Webhook (MUST come before express.json)
-// ----------------------
-app.post(
-  "/api/subscription/webhook",
-  express.raw({ type: "application/json" }),
-  webhookHandler
-);
-
-
 // 1. STABILIZE CORS
 const allowedOrigins = [
   "http://localhost:3000",
@@ -50,7 +40,13 @@ app.use(
 );
 
 // ----------------------
-
+// 2. Stripe Webhook (MUST come before express.json)
+// ----------------------
+app.post(
+  "/api/subscription/webhook",
+  express.raw({ type: "application/json" }),
+  webhookHandler
+);
 
 // ----------------------
 // 3. Global Middleware (JSON parsing for everything else)
