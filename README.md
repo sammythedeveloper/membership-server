@@ -1,4 +1,4 @@
-# 🌐 Slate | High-Output Infrastructure Intelligence
+# 🌐 Slate 
 
 Slate is a production-grade Saas style infrastructure intelligence platform designed to bridge the gap between complex backend services and actionable user analytics. By leveraging a high-performance, cloud-native architecture, Slate provides real-time visibility into deployed services, subscription states, and manage these useres on a system-level on one admin dashboard.
 
