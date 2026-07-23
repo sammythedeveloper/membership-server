@@ -1,12 +1,12 @@
 # 🌐 Slate 
 
-Slate is a production-grade Saas style infrastructure intelligence platform designed to bridge the gap between complex backend services and actionable user analytics. By leveraging a high-performance, cloud-native architecture, Slate provides real-time visibility into deployed services, subscription states, and manage these useres on a system-level on one admin dashboard.
+Slate is a production-grade Saas style full stack platform designed to bridge the gap between complex backend services and actionable user analytics. By leveraging a high-performance architecture, Slate provides real-time visibility into deployed services, subscription states, and manage these useres on a system-level on one admin dashboard.
 
 > "I build this to demonestrate how i can use AI and my skill to build modern industry standard Saas Platform"
 
 ---
 
-## 🛠 Architectural Intelligence
+## 🛠 Architecture insight 
 
 Slate provides a segregated, secure control plane to manage both subscriber access and administrative oversight:
 
@@ -16,19 +16,19 @@ Slate provides a segregated, secure control plane to manage both subscriber acce
 
 ---
 
-## 🚀 The Core Stack
+## Core Stack
 
 | Layer | Technology | Infrastructure Role |
 | :--- | :--- | :--- |
 | **Interface** | React, Tailwind, Shadcn/UI | High-output aesthetic for data-heavy views. |
-| **Logic** | Node.js, Express.js | Event-driven, low-latency API orchestration. |
-| **State** | PostgreSQL (Relational) | Persistent storage for complex relational data. |
-| **Integrations** | Stripe | Automated, signature-verified billing pipelines. |
-| **Deployment** | Railway, Vercel | Globally distributed cloud infrastructure. |
+| **Logic** | Node.js, Express.js | Event-driven, API orchestration. |
+| **State** | PostgreSQL (Relational) | Persistent storage for relational data. |
+| **Integrations** | Stripe | Automated, signature-verified billing system. |
+| **Deployment** | Railway, Vercel | hosted cloud infrastructure. |
 
 ---
 
-## 🔍 Engineering Capabilities
+## 🔍 Capabilities
 
 ### Dual-Dashboard Authorization
 Slate implements role-based access control (RBAC). The application architecture distinguishes between standard user sessions and administrative sessions, ensuring that infrastructure oversight tools are protected by elevated verification logic.
