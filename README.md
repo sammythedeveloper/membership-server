@@ -1,4 +1,4 @@
-# 🚀 HorizonHub | Full-Stack Community Membership Prototype
+# SLATE | Full-Stack Community Membership Prototype
 
 **HorizonHub** is a modern, full-stack membership management system designed to demonstrate secure payment integration, automated subscription lifecycles, and cloud-native deployment. 
 
