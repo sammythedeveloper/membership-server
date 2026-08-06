@@ -1,9 +1,5 @@
 # SLATE | Full-Stack Community Membership Prototype
 
-**HorizonHub** is a modern, full-stack membership management system designed to demonstrate secure payment integration, automated subscription lifecycles, and cloud-native deployment. 
-
-This prototype was built to solve the "last mile" of SaaS development: handling real-time payment events from **Stripe** and synchronizing them with a persistent **PostgreSQL** database in a distributed production environment.
-
 ---
 
 ## 🛠 Tech Stack
@@ -48,9 +44,3 @@ Transitioned the application from `localhost` to a live cloud architecture.
 
 ---
 
-## 🏃 Getting Started
-
-### 1. Clone & Install
-```bash
-git clone [https://github.com/sammythedeveloper/horizon-hub.git](https://github.com/sammythedeveloper/horizon-hub.git)
-npm install
